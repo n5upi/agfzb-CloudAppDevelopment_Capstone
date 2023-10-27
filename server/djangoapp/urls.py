@@ -19,10 +19,10 @@ urlpatterns = [
  #   path('dealer/<int:id>/review', views.add_review, name='add_review'),
 
     # path for about us view
- #   path(route='about/', view=views.about, name='about'),
+    path(route='about/', view=views.about, name='about'),
 
     # path for contact us view
- #   path(route='contact/', view=views.contact, name='contact'),
+    path(route='contact/', view=views.contact, name='contact'),
 
  #   path for registration
  #   path('registration/', views.registration_request, name='registration'),
