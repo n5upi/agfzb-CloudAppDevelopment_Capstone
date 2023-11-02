@@ -14,12 +14,60 @@
 </head>
 
     <body>
-    <!-- Remove this line the first time you edit this file -->
-     This is Django<br />
     <!--Add a nav bar here -->
-    <a href="about">About Us</a>
-    <br />
-    <a href="contact">Contact Us</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'djangoapp:index' %}"><i class="bi bi-car-front"></i> Dealership</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'djangoapp:about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+                    </li>
+                    <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Inventory
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">New Cars</a>
+                        <a class="dropdown-item" href="#">Used Cars</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Finance</a>
+                    </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <div class="container-fluid">
+                        <div class="dropdown-toggle">
+                            <button class="dropbtn">{{user.first_name}}</button>
+                            <div class="dropdown-content">
+                                <a href="{% url 'djangoapp:logout' %}">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <li>
+                        <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username" required>
+                                <input type="password" class="form-control" placeholder="Password" name="psw" required>
+                                <button class="btn btn-outline-light btn-primary" type="submit">Login</button>
+                                <a class="btn btn-outline-light btn-light-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                            </div>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+      </nav>
     
     <!--Add a dealer table here -->
 
