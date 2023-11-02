@@ -43,14 +43,16 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
+                    <li>
                     <div class="container-fluid">
-                        <div class="dropdown-toggle">
+                        <!--div class="dropdown-toggle"-->
                             <button class="dropbtn">{{user.first_name}}</button>
-                            <div class="dropdown-content">
-                                <a href="{% url 'djangoapp:logout' %}">Logout</a>
-                            </div>
-                        </div>
+                            <!--div class="dropdown-content"-->
+                                <a class="btn btn-outline-light btn-light-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                            <!--/div-->
+                        <!--/div-->
                     </div>
+                    </li>
                     {% else %}
                     <li>
                         <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
