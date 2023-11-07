@@ -1,6 +1,6 @@
+''' django models '''
 from django.db import models
-from django.utils.timezone import now
-
+#from django.utils.timezone import now
 
 # Create your models here.
 
@@ -10,6 +10,7 @@ from django.utils.timezone import now
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
 class CarMake(models.Model):
+    ''' CarMake models '''
     name = models.CharField(null=False, max_length=30, default='')
     description = models.CharField(max_length=1000)
     def __str__(self):
@@ -27,6 +28,7 @@ class CarMake(models.Model):
 # - Any other fields you would like to include in car model
 # - __str__ method to print a car make object
 class CarModel(models.Model):
+    ''' CarModels '''
     make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     dealer_id = models.IntegerField()
     name = models.CharField(null=False, max_length=30, default='')
@@ -56,8 +58,8 @@ class CarModel(models.Model):
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 class CarDealer:
-
-    def __init__(self, address, city, full_name, dealer_id, lat, long, short_name, st, zip):
+    ''' CarDealer '''
+    def __init__(self, address, city, full_name, dealer_id, lat, long, short_name, dealer_st, dealer_zip):
         # Dealer address
         self.address = address
         # Dealer city
@@ -65,7 +67,7 @@ class CarDealer:
         # Dealer Full Name
         self.full_name = full_name
         # Dealer id
-        self.id = id
+        self.dealer_id = dealer_id
         # Location lat
         self.lat = lat
         # Location long
@@ -73,15 +75,16 @@ class CarDealer:
         # Dealer short name
         self.short_name = short_name
         # Dealer state
-        self.st = st
+        self.dealer_st = dealer_st
         # Dealer zip
-        self.zip = zip
+        self.dealer_zip = dealer_zip
 
     def __str__(self):
         return "Dealer name: " + self.full_name
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview:
+    ''' DealerReview '''
     def __init__(self, dealership, name, purchase, review, purchase_date, car_make, car_model, car_year, sentiment, id):
         self.dealership=dealership
         self.name=name

@@ -1,8 +1,9 @@
+''' javascrip oject notation '''
 import json
 import requests
-from .models import CarDealer
-from requests.auth import HTTPBasicAuth
+#from requests.auth import HTTPBasicAuth
 #from django.http import JsonResponse
+from .models import CarDealer
 
 def get_request(url, **kwargs):
     print(kwargs)

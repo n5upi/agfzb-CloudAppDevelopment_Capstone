@@ -1,3 +1,4 @@
+''' django imports '''
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
@@ -116,5 +117,6 @@ def get_dealer_details(request, dealer_id):
         context["dealer"] = dealer
 
 # Create a `add_review` view to submit a review
+
 # def add_review(request, dealer_id):
 # ...
