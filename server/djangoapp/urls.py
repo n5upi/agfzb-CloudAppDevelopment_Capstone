@@ -4,8 +4,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from . import views
 
-#app_name = 'djangoapp'
-APP_NAME = 'djangoapp'
+app_name = 'djangoapp'
+#APP_NAME = 'djangoapp'
 urlpatterns = [
     # route is a string contains a URL pattern
     # view refers to the view function
@@ -16,7 +16,7 @@ urlpatterns = [
     path('dealer/<int:id>/', view=views.get_dealer_details, name='dealer_details'),
 
     # path for add a review view
-    # path('dealer/<int:id>/review', view=views.add_review, name='add_review'),
+    #path('dealer/<int:id>/review', view=views.add_review, name='add_review'),
 
     # path for about us view
     path(route='about/', view=views.about, name='about'),
