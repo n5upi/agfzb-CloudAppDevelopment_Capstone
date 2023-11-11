@@ -4,7 +4,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
+from .models import CarDealer, CarModel, CarMake, DealerReview
 # from .restapis import related methods
+from .restapis import get_dealers_from_cf, get_dealer_reviews_from_cf, get_request, get_dealer_by_id_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -99,13 +101,17 @@ def registration_request(request):
 def get_dealerships(request):
     ''' dealerships '''
     if request.method == "GET":
+        context = {}
+        # url is returning errors
         url = "https://us-south.functions.appdomain.cloud/api/v1/web/e2297f16-3884-47c0-862c-4bc7dda3221d/dealership-package/get-dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        #dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        context["dealership_list"] = dealerships
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        #return HttpResponse(dealer_names)
+        return render(request, 'djangoapp/index.html', context)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
@@ -115,7 +121,6 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         context = {}
         # id == dealer_id
-        # url = "https://us-east.functions.appdomain.cloud/api/v1/web/befaae8a-3d64-42a4-9aab-bdbd5aa2dd89/reviews-package/fucking%20tired%202"
         # Call the get_dealer_reviews_from_cf function to get reviews
         reviews = get_dealer_reviews_from_cf(dealer_id)
         context["reviews"] = reviews
@@ -125,7 +130,6 @@ def get_dealer_details(request, dealer_id):
         context["dealer"] = dealer
 
 # Create a `add_review` view to submit a review
-
 def add_review(request, dealer_id):
     ''' review '''
     if request.method == "GET":

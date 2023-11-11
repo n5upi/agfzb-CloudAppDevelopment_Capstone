@@ -10,9 +10,154 @@
     <body>
 
     <!--Add a nav bar here -->
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'djangoapp:index' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'djangoapp:about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer_id=dealer.id %}">Add Review</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <form class="form-inline" action="{% url 'djangoapp:login' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
+                            <input type="password" class="form-control" placeholder="Password" name="psw">
+                            <button class="btn btn-primary" type="submit">Login</button>
+                            <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                        </div>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
     <!-- Add reviews as cards -->
-
+    <div class="container pt-4 pr-3 pb-5 pl-3">
+        <!-- <h2>Dealer Details</h2>
+        <p>Name: {{ dealer.name }}</p>
+        <p>Address: {{ dealer.address }}</p> -->
+        <!-- Add more fields as needed -->
+        <h2>Reviews for {{ dealer.full_name }}</h2>
+        <!-- Old Layout wrapper -->
+        <!--
+        {% if reviews %}
+        <div class="card-columns">
+            {% for review in reviews %}
+            <div class="card px-3 py-3">
+                {% if review.sentiment == 'positive' %}
+                <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png">
+                {% else %}
+                {% if review.sentiment == 'negative' %}
+                <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png">
+                {% else %}
+                <img width="50" height="50" class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png">
+                {% endif %}
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title">{{review.car_make}} {{review.car_model}}</h3>
+                    <h5 class="card-title">Year: {{review.car_year}}<h5>
+                    <h5 class="card-title">Purchase Date: {{review.purchase_date}}</h5>
+                    <p class="card-text">{{review.review}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        -->
+        <!-- Old Layout wrapper -->
+        <!-- Carousel wrapper -->
+        <div id="carouselMultiItemExample" class="carousel slide carousel-dark text-center" data-mdb-ride="carousel">
+            <!-- Controls -->
+            <div class="d-flex justify-content-center mb-4">
+                <button class="carousel-control-prev position-relative" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next position-relative" type="button" data-mdb-target="#carouselMultiItemExample" data-mdb-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <!-- Inner -->
+            <div class="carousel-inner py-4">
+                {% for review in reviews %}
+                <!-- Check if it's the first review or a multiple of 4??? to start a new carousel item -->
+                {% if forloop.counter == 1 or forloop.counter|divisibleby:4 %}
+                <div class="carousel-item{% if forloop.counter == 1 %} active{% endif %}">
+                    <div class="container">
+                        <div class="row">
+                {% endif %}
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <!-- Sentiment icon based on review.sentiment -->
+                                    {% if review.sentiment == 'positive' %}
+                                    <img src="{{ MEDIA_URL }}/emoji/positive.png" width="50" height="50" alt="Positive Sentiment">
+                                    {% elif review.sentiment == 'negative' %}
+                                    <img src="{{ MEDIA_URL }}/emoji/negative.png" width="50" height="50" alt="Negative Sentiment">
+                                    {% else %}
+                                    <img src="{{ MEDIA_URL }}/emoji/neutral.png" width="50" height="50" alt="Neutral Sentiment">
+                                    {% endif %}
+                                    <!-- Card content using data from the review object -->
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{ review.car_make }} {{ review.car_model }}</h3>
+                                        <h5 class="card-title">Year: {{ review.car_year }}</h5>
+                                        <h5 class="card-title">Purchase Date: {{ review.purchase_date }}</h5>
+                                        <p class="card-text">{{ review.review }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                {% if forloop.counter|divisibleby:3 or forloop.last %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Carousel wrapper -->
+        <!-- Review Button Wrapper-->
+        <div class="text-center">
+            <p class="alert alert-info">
+                Add a review for {{dealer.full_name}}!
+                <br>
+                <a class="btn btn-primary" href="{% url 'djangoapp:add_review' dealer_id=dealer.id %}">Leave a Review</a>
+            </p>
+        </div>
+        {% else %}
+        <div class="text-center"> <!-- Add this div -->
+            <p class="alert alert-info">
+                No reviews available for {{dealer.full_name}}. Be the first to leave a review!
+                <br>
+                <a class="btn btn-primary" href="{% url 'djangoapp:add_review' dealer_id=dealer.id %}">Leave a Review</a>
+            </p>
+        </div> <!-- Close the div -->
+        <!-- Review Button Wrapper-->
+        {% endif %}
+    </div>
     </body>
 
 </html>
