@@ -44,16 +44,10 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.is_authenticated %}
                     <li>
-                    <!--div class="container-fluid"-->
-                        <!--div class="dropdown-toggle"-->
-                            <!--button class="dropbtn">{{user.first_name}}</button-->
-                            <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
-                            <!--div class="dropdown-content"-->
-                                <!--a class="btn btn-outline-light btn-light-link" href="{% url 'djangoapp:logout' %}">Logout</a-->
-                                <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
-                            <!--/div-->
-                        <!--/div-->
-                    <!--/div-->
+                    <div class="container-fluid">
+                        <button class="dropbtn">{{user.first_name}}</button>
+                        <a class="btn btn-outline-light btn-light-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+                    </div>
                     </li>
                     {% else %}
                     <li>

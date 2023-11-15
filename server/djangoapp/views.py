@@ -103,7 +103,9 @@ def get_dealerships(request):
     if request.method == "GET":
         context = {}
         # url is returning errors
-        url = "https://us-south.functions.appdomain.cloud/api/v1/web/e2297f16-3884-47c0-862c-4bc7dda3221d/dealership-package/get-dealership"
+        #url = "https://us-south.functions.appdomain.cloud/api/v1/web/e2297f16-3884-47c0-862c-4bc7dda3221d/dealership-package/get-dealership"
+        # newly copied endpoint URL get-dealership.js inside function
+        url = "https://dhuggins-3000.theiadocker-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name

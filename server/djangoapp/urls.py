@@ -13,10 +13,10 @@ urlpatterns = [
     path(route='', view=views.get_dealerships, name='index'),
 
     # path for dealer details
-    path('dealer/<int:id>/', view=views.get_dealer_details, name='dealer_details'),
+    path('dealer<int:id>/', views.get_dealer_details, name='dealer_details'),
 
     # path for add a review view
-    path('dealer/<int:id>/review', view=views.add_review, name='add_review'),
+    path(route='dealer/<int:dealer_id>/add_review', view=views.add_review, name='add_review'),
 
     # path for about us view
     path(route='about/', view=views.about, name='about'),
