@@ -95,9 +95,11 @@
                     <label for="car">Select your car (model-make-year):</label>
                     <select name="car" id="car" class="form-select" required>
                         <option value="" selected disabled>Select a car</option>
-                        {% for car in cars %}
-                        <option value="{{ car.id }}">{{ car.make.name }} - {{ car.name }} - {{ car.year|date:"Y" }}</option>
-                        {% endfor %}
+                        {% if car %} <!-- I added so it want error  --> 
+                            {% for car in cars %}
+                            <option value="{{ car.id }}">{{ car.make.name }} - {{ car.name }} - {{ car.year|date:"Y" }}</option>
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 </div>
                 <div class="form-group" data-provide="datepicker">
