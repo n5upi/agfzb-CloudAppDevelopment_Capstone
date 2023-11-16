@@ -134,7 +134,7 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
-    ''' review '''
+    ''' add review '''
     if request.method == "GET":
         # Use the get_dealer_by_id_from_cf function to fetch dealer details
         dealer = get_dealer_by_id_from_cf(dealer_id)
@@ -145,7 +145,7 @@ def add_review(request, dealer_id):
             "user": request.user  # Pass the user object
         }
         return render(request, 'djangoapp/add_review.html', context)
-    
+
     if request.method == "POST":
         # Check if the user is authenticated (logged in)
         if request.user.is_authenticated:

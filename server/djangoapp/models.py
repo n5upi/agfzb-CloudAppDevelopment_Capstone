@@ -1,5 +1,8 @@
 ''' django models '''
 from django.db import models
+from django.core import serializers
+import uuid
+import json
 #from django.utils.timezone import now
 
 # Create your models here.
@@ -14,8 +17,12 @@ class CarMake(models.Model):
     name = models.CharField(null=False, max_length=30, default='')
     description = models.CharField(max_length=1000)
     def __str__(self):
-        return "Make: " + self.name + \
-               "Description: " + self.description
+        #return "Make: " + self.name + \
+        #       "Description: " + self.description
+
+        #return "Name: " + self.maker_name
+        
+        return "Name: " + self.name
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 # - Many-To-One relationship to Car Make model
@@ -31,8 +38,10 @@ class CarModel(models.Model):
     ''' CarModels '''
     make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     #dealer_id = models.IntegerField()
-    id = models.IntegerField(default=1,primary_key=True)
+    #id = models.IntegerField(default=1,primary_key=True)
+    dealer_ID = models.IntegerField(default=1,primary_key=True)
     name = models.CharField(null=False, max_length=30, default='')
+    make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     SEDAN = 'sedan'
     SUV = 'suv'
     WAGON = 'wagon'
@@ -51,11 +60,15 @@ class CarModel(models.Model):
     )
     year = models.DateField()
     def __str__(self):
-        return " Make Name: "+ self.make.name + \
-               "Name: " + self.name + \
-               " Type: " + self.type + \
-               " Dealer ID: " + str(self.dealer_id)+ \
-               " Year: " + str(self.year)
+        #return " Make Name: "+ self.make.name + \
+        #       "Name: " + self.name + \
+        #       " Type: " + self.type + \
+        #       " Dealer ID: " + str(self.dealer_id)+ \
+        #       " Year: " + str(self.year)
+
+        #return "Name: " + self.model_name
+
+        return "Name: " + self.name
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 class CarDealer:
