@@ -1,9 +1,17 @@
 ''' javascrip oject notation '''
-import json
+#import json
+#import requests
+#from requests.auth import HTTPBasicAuth
+#from django.http import JsonResponse
+#from .models import CarDealer
 import requests
+import json
+from .models import CarDealer, DealerReview
 from requests.auth import HTTPBasicAuth
-from django.http import JsonResponse
-from .models import CarDealer
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_watson.natural_language_understanding_v1 import Features,SentimentOptions
+import time
 
 # Create a `get_request` to make HTTP GET requests
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
@@ -40,11 +48,15 @@ def get_request(url, api_key=None, **kwargs):
 # - Parse JSON results into a CarDealer object list
 def get_dealers_from_cf(url, **kwargs):
     ''' is not defined '''
-    print(kwargs)
+    #print(kwargs)
     results = []
+    state = kwargs.get("state")
     # Call get_request with a URL parameter
-    json_result = get_request(url)
-    print(json_result)
+    if state:
+        json_result = get_request(url, state=state)
+    else:
+        json_result = get_request(url)
+    #print(json_result)
     if json_result:
         # Get the row list in JSON as dealers
         #dealers = json_result["row"]
@@ -52,8 +64,8 @@ def get_dealers_from_cf(url, **kwargs):
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
-            #dealer_doc = dealer["doc"]
-            dealer_doc = dealer
+            dealer_doc = dealer["doc"]
+            #dealer_doc = dealer
             # Create a CarDealer object with values in `doc` object
             dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                 id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
